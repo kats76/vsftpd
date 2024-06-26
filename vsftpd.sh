@@ -1,14 +1,16 @@
 #!/bin/bash
 
 #Instalacion
-apt-get update -y
 apt-get upgrade -y
+apt-get update -y
 apt install vsftpd apache2 openssl -y
 
 # Generar certificados autofirmados
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/juan.key -out /etc/ssl/certs/juan.crt -subj "/C=ES/ST=Madrid/L=Madrid/O=Organizacion/OU=Departamento/CN=juantest.com"
 
 # Modificar configuracion
+cp /etc/vsftpd.conf /etc/vsftpd.conf.bk
+
 cat > /etc/vsftpd.conf << EOF
 listen=YES
 anonymous_enable=NO
